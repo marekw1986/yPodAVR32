@@ -8,6 +8,15 @@ ASF = /opt/microchip/xdk-asf-3.50.0
 
 LIBMAD_DIR = $(ASF)/thirdparty/libmad/libs/at32ucr2/gcc
 
+INCLUDES = \
+	-Ifatfs \
+	-Iinclude \
+	-I$(ASF)/avr32/utils/header_files \
+	-I$(ASF)/thirdparty/libmad \
+	-I$(ASF)/avr32/utils \
+	-I$(ASF)/avr32/preprocessor \
+	-I$(ASF)/avr32/drivers \
+
 CFLAGS = \
     -march=ucr2 \
     -mpart=uc3a1512 \
@@ -18,10 +27,7 @@ CFLAGS = \
     -ffunction-sections \
     -fdata-sections \
     -mrelax \
-    -I$(ASF)/avr32/utils/header_files \
-    -I$(ASF)/thirdparty/libmad \
-    -Iinclude \
-    -Ifatfs
+    $(INCLUDES) \
 
 LDFLAGS = \
     -march=ucr2 \
