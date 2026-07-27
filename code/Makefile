@@ -20,6 +20,7 @@ CFLAGS = \
     -mrelax \
     -I$(ASF)/avr32/utils/header_files \
     -I$(ASF)/thirdparty/libmad \
+    -Iinclude \
     -Ifatfs
 
 LDFLAGS = \
@@ -40,6 +41,7 @@ TARGET = $(BUILD)/ypod
 
 SRCS = \
 	src/main.c \
+	src/buttons.c \
 	fatfs/sd.c \
 	fatfs/diskio.c \
 	fatfs/ff.c \
