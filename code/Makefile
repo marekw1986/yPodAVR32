@@ -37,7 +37,9 @@ LIBS = \
 BUILD = build
 TARGET = $(BUILD)/ypod
 
-SRCS = main.c
+SRCS = \
+	src/main.c
+	
 OBJS = $(SRCS:%.c=$(BUILD)/%.o)
 
 all: $(TARGET).elf $(TARGET).bin $(TARGET).hex
@@ -48,7 +50,7 @@ $(TARGET).elf: $(OBJS)
 	$(SIZE) $@
 
 $(BUILD)/%.o: %.c
-	mkdir -p $(BUILD)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).bin: $(TARGET).elf
