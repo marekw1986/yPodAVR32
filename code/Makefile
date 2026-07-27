@@ -41,6 +41,7 @@ TARGET = $(BUILD)/ypod
 
 SRCS = \
 	src/main.c \
+	src/system_time.c \
 	src/buttons.c \
 	fatfs/sd.c \
 	fatfs/diskio.c \

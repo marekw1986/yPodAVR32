@@ -1,6 +1,6 @@
 #include <avr32/io.h>
 #include "buttons.h"
-#include "time.h"
+#include "system_time.h"
 
 void key_init(button_t *key, volatile uint32_t *pin, uint32_t mask, void (*push_proc)(void), void (*long_proc)(void))
 {
