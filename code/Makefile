@@ -19,7 +19,8 @@ CFLAGS = \
     -fdata-sections \
     -mrelax \
     -I$(ASF)/avr32/utils/header_files \
-    -I$(ASF)/thirdparty/libmad
+    -I$(ASF)/thirdparty/libmad \
+    -Ifatfs
 
 LDFLAGS = \
     -march=ucr2 \
@@ -39,6 +40,7 @@ TARGET = $(BUILD)/ypod
 
 SRCS = \
 	src/main.c
+	
 	
 OBJS = $(SRCS:%.c=$(BUILD)/%.o)
 
