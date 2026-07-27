@@ -6,6 +6,8 @@ SIZE    = $(TOOLCHAIN)/bin/avr32-size
 
 ASF = /opt/microchip/xdk-asf-3.50.0
 
+LIBMAD_DIR = $(ASF)/thirdparty/libmad/libs/at32ucr2/gcc
+
 CFLAGS = \
     -march=ucr2 \
     -mpart=uc3a1512 \
@@ -16,7 +18,8 @@ CFLAGS = \
     -ffunction-sections \
     -fdata-sections \
     -mrelax \
-    -I$(ASF)/avr32/utils/header_files
+    -I$(ASF)/avr32/utils/header_files\
+    -I$(ASF)/thirdparty/libmad
 
 LDFLAGS = \
     -march=ucr2 \
@@ -25,7 +28,10 @@ LDFLAGS = \
     -Wl,--defsym,__heap_size__=0x400 \
     -Wl,-T,link_uc3a1512.lds \
     -Wl,--gc-sections\
-	-Wl,-Map,test.map,--cref
+	-Wl,-Map,test.map,--cref\
+	
+LIBS = \
+    $(LIBMAD_DIR)/libmad-at32ucr2-balanced_opt.a
 
 TARGET = test
 
@@ -35,7 +41,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(TARGET).elf $(TARGET).bin $(TARGET).hex
 
 $(TARGET).elf: $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 	$(SIZE) $@
 
 %.o: %.c
