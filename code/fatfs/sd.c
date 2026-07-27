@@ -137,7 +137,7 @@ static void spi0_set_baud(unsigned long hz) {
     if (scbr < 1) scbr = 1;
     if (scbr > 255) scbr = 255;
 
-    SD_SPI.CSR[0] = SPI_CSR_NCPHA | SPI_CSR_BITS_8 | (scbr << SPI_CSR_SCBR_SHIFT);
+    SD_SPI.csr0 = SPI_CSR_NCPHA | SPI_CSR_BITS_8 | (scbr << SPI_CSR_SCBR_SHIFT);
 }
 
 static void spi0_init_hw(void) {
@@ -145,22 +145,22 @@ static void spi0_init_hw(void) {
      * enabled at reset. If SPI0 doesn't respond, check
      * AVR32_PM.PBAMASK for the SPI0 bit before looking elsewhere. */
 
-    SD_SPI.CR = SPI_CR_SWRST;
-    SD_SPI.CR = SPI_CR_SWRST;   /* datasheet recommends writing SWRST twice */
+    SD_SPI.cr = SPI_CR_SWRST;
+    SD_SPI.cr = SPI_CR_SWRST;   /* datasheet recommends writing SWRST twice */
 
-    SD_SPI.MR = SPI_MR_MSTR | SPI_MR_MODFDIS | SPI_MR_PCS_NPCS0;
+    SD_SPI.mr = SPI_MR_MSTR | SPI_MR_MODFDIS | SPI_MR_PCS_NPCS0;
 
     spi0_set_baud(250000UL);    /* slow clock for card identification */
 
-    SD_SPI.CR = SPI_CR_SPIEN;
+    SD_SPI.cr = SPI_CR_SPIEN;
 }
 
 /* send one byte, receive one back at the same time (full duplex) */
 static unsigned char writeSPI(unsigned char b) {
-    while ((SD_SPI.SR & SPI_SR_TDRE) == 0) ;
-    SD_SPI.TDR = b;
-    while ((SD_SPI.SR & SPI_SR_RDRF) == 0) ;
-    return (unsigned char)SD_SPI.RDR;
+    while ((SD_SPI.sr & SPI_SR_TDRE) == 0) ;
+    SD_SPI.tdr = b;
+    while ((SD_SPI.sr & SPI_SR_RDRF) == 0) ;
+    return (unsigned char)SD_SPI.rdr;
 } /* writeSPI */
 
 /* macros, same shape as the Pico original */

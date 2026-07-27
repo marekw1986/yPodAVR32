@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <avr32/io.h>
 #include <mad.h>
+#include <ff.h>
+
+FATFS SDFat;
 
 int main(void)
 {
@@ -14,6 +17,8 @@ int main(void)
     volatile uint32_t counter = version[0];
 
     AVR32_GPIO.port[0].ovr = 0x01;
+    
+    FRESULT res = f_mount(&SDFat, "0:", 0);
 
     while (1)
     {

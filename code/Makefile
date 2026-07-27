@@ -39,7 +39,10 @@ BUILD = build
 TARGET = $(BUILD)/ypod
 
 SRCS = \
-	src/main.c
+	src/main.c \
+	fatfs/sd.c \
+	fatfs/diskio.c \
+	fatfs/ff.c \
 	
 	
 OBJS = $(SRCS:%.c=$(BUILD)/%.o)
