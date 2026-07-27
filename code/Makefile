@@ -35,7 +35,7 @@ LIBS = \
     
 
 BUILD = build
-TARGET = $(BUILD)/test
+TARGET = $(BUILD)/ypod
 
 SRCS = main.c
 OBJS = $(SRCS:%.c=$(BUILD)/%.o)
