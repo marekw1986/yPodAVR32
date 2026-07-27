@@ -18,7 +18,7 @@ CFLAGS = \
     -ffunction-sections \
     -fdata-sections \
     -mrelax \
-    -I$(ASF)/avr32/utils/header_files\
+    -I$(ASF)/avr32/utils/header_files \
     -I$(ASF)/thirdparty/libmad
 
 LDFLAGS = \
@@ -27,24 +27,28 @@ LDFLAGS = \
     -mrelax \
     -Wl,--defsym,__heap_size__=0x400 \
     -Wl,-T,link_uc3a1512.lds \
-    -Wl,--gc-sections\
-	-Wl,-Map,test.map,--cref\
+    -Wl,--gc-sections \
+	-Wl,-Map,$(TARGET).map,--cref
 	
 LIBS = \
     $(LIBMAD_DIR)/libmad-at32ucr2-balanced_opt.a
+    
 
-TARGET = test
+BUILD = build
+TARGET = $(BUILD)/test
 
 SRCS = main.c
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:%.c=$(BUILD)/%.o)
 
 all: $(TARGET).elf $(TARGET).bin $(TARGET).hex
 
 $(TARGET).elf: $(OBJS)
+	mkdir -p $(BUILD)
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 	$(SIZE) $@
 
-%.o: %.c
+$(BUILD)/%.o: %.c
+	mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).bin: $(TARGET).elf
@@ -54,6 +58,6 @@ $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex $< $@
 
 clean:
-	rm -f *.o *.elf *.bin *.hex *.map
+	rm -rf $(BUILD)
 
 .PHONY: all clean
