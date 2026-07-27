@@ -14,8 +14,10 @@ INCLUDES = \
 	-I$(ASF)/avr32/utils/header_files \
 	-I$(ASF)/thirdparty/libmad \
 	-I$(ASF)/avr32/utils \
-	-I$(ASF)/avr32/preprocessor \
+	-I$(ASF)/avr32/utils/preprocessor \
 	-I$(ASF)/avr32/drivers \
+	-I$(ASF)/avr32/drivers/intc \
+	-I$(ASF)/common/utils \
 
 CFLAGS = \
     -march=ucr2 \
@@ -45,16 +47,19 @@ LIBS = \
 BUILD = build
 TARGET = $(BUILD)/ypod
 
-SRCS = \
+CSRCS = \
 	src/main.c \
 	src/system_time.c \
 	src/buttons.c \
 	fatfs/sd.c \
 	fatfs/diskio.c \
 	fatfs/ff.c \
+	$(ASF)/avr32/drivers/intc/intc.c \
 	
-	
-OBJS = $(SRCS:%.c=$(BUILD)/%.o)
+ASRCS = \
+	$(ASF)/avr32/drivers/intc/exception.S \
+
+OBJS = $(CSRCS:%.c=$(BUILD)/%.o) $(patsubst /%.S,$(BUILD)/%.o,$(ASRCS))
 
 all: $(TARGET).elf $(TARGET).bin $(TARGET).hex
 
@@ -66,6 +71,10 @@ $(TARGET).elf: $(OBJS)
 $(BUILD)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
+	
+$(BUILD)/%.o: /%.S
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(TARGET).bin: $(TARGET).elf
 	$(OBJCOPY) -O binary $< $@

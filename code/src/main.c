@@ -18,6 +18,8 @@ int main(void)
 
     AVR32_GPIO.port[0].ovr = 0x01;
     
+    system_time_init();
+    
     FRESULT res = f_mount(&SDFat, "0:", 0);
 
     while (1)
