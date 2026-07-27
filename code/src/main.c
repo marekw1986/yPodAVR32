@@ -3,6 +3,7 @@
 #include <avr32/io.h>
 #include <mad.h>
 #include <ff.h>
+#include "pcd8544.h"
 
 FATFS SDFat;
 
@@ -19,6 +20,7 @@ int main(void)
     AVR32_GPIO.port[0].ovr = 0x01;
     
     system_time_init();
+    PCD_Ini();
     
     FRESULT res = f_mount(&SDFat, "0:", 0);
 

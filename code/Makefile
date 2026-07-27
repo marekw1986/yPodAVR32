@@ -57,6 +57,7 @@ CSRCS = \
 	fatfs/ff.c \
 	lcd/pcd8544.c \
 	$(ASF)/avr32/drivers/intc/intc.c \
+	$(ASF)/avr32/drivers/gpio/gpio.c \
 	
 ASRCS = \
 	$(ASF)/avr32/drivers/intc/exception.S \
