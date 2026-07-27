@@ -10,6 +10,7 @@ LIBMAD_DIR = $(ASF)/thirdparty/libmad/libs/at32ucr2/gcc
 
 INCLUDES = \
 	-Ifatfs \
+	-Ilcd \
 	-Iinclude \
 	-I$(ASF)/avr32/utils/header_files \
 	-I$(ASF)/thirdparty/libmad \
@@ -54,6 +55,7 @@ CSRCS = \
 	fatfs/sd.c \
 	fatfs/diskio.c \
 	fatfs/ff.c \
+	lcd/pcd8544.c \
 	$(ASF)/avr32/drivers/intc/intc.c \
 	
 ASRCS = \
