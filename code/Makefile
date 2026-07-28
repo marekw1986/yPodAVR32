@@ -9,6 +9,7 @@ ASF = /opt/microchip/xdk-asf-3.50.0
 LIBMAD_DIR = $(ASF)/thirdparty/libmad/libs/at32ucr2/gcc
 
 INCLUDES = \
+	-Iaudio \
 	-Ifatfs \
 	-Ilcd \
 	-Iinclude \
@@ -19,8 +20,11 @@ INCLUDES = \
 	-I$(ASF)/avr32/drivers \
 	-I$(ASF)/avr32/drivers/intc \
 	-I$(ASF)/avr32/drivers/gpio \
+	-I$(ASF)/avr32/drivers/twi \
 	-I$(ASF)/avr32/drivers/pm \
 	-I$(ASF)/avr32/drivers/flashc \
+	-I$(ASF)/avr32/drivers/ssc/i2s \
+	-I$(ASF)/avr32/drivers/pdca \
 	-I$(ASF)/common/utils \
 
 CFLAGS = \
@@ -55,14 +59,18 @@ CSRCS = \
 	src/main.c \
 	src/system_time.c \
 	src/buttons.c \
+	audio/wm8731.c \
 	fatfs/sd.c \
 	fatfs/diskio.c \
 	fatfs/ff.c \
 	lcd/pcd8544.c \
 	$(ASF)/avr32/drivers/intc/intc.c \
+	$(ASF)/avr32/drivers/twi/twi.c \
 	$(ASF)/avr32/drivers/gpio/gpio.c \
 	$(ASF)/avr32/drivers/pm/pm.c \
 	$(ASF)/avr32/drivers/flashc/flashc.c \
+	$(ASF)/avr32/drivers/ssc/i2s/ssc_i2s.c \
+	$(ASF)/avr32/drivers/pdca/pdca.c \
 	
 ASRCS = \
 	$(ASF)/avr32/drivers/intc/exception.S \

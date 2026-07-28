@@ -5,6 +5,7 @@
 #include <ff.h>
 #include "system_time.h"
 #include "pcd8544.h"
+#include "wm8731.h"
 
 FATFS SDFat;
 
@@ -24,12 +25,14 @@ int main(void)
     
     system_time_init();
     PCD_Ini();
+    wm8731_init();
     
     /*FRESULT res = */f_mount(&SDFat, "0:", 0);
 
     while (1)
     {
         counter++;
+        wm8731_handle();
     }
 
     return 0;
