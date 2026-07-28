@@ -3,6 +3,7 @@
 #include <avr32/io.h>
 #include <mad.h>
 #include <ff.h>
+#include "intc.h"
 #include "system_time.h"
 #include "pcd8544.h"
 #include "wm8731.h"
@@ -23,6 +24,7 @@ int main(void)
     
     clock_init();
     
+    INTC_init_interrupts();
     system_time_init();
     PCD_Ini();
     wm8731_init();
