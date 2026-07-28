@@ -3,6 +3,7 @@
 #include <avr32/io.h>
 #include <mad.h>
 #include <ff.h>
+#include "system_time.h"
 #include "pcd8544.h"
 
 FATFS SDFat;
@@ -24,7 +25,7 @@ int main(void)
     system_time_init();
     PCD_Ini();
     
-    FRESULT res = f_mount(&SDFat, "0:", 0);
+    /*FRESULT res = */f_mount(&SDFat, "0:", 0);
 
     while (1)
     {

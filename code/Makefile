@@ -18,6 +18,7 @@ INCLUDES = \
 	-I$(ASF)/avr32/utils/preprocessor \
 	-I$(ASF)/avr32/drivers \
 	-I$(ASF)/avr32/drivers/intc \
+	-I$(ASF)/avr32/drivers/gpio \
 	-I$(ASF)/avr32/drivers/pm \
 	-I$(ASF)/avr32/drivers/flashc \
 	-I$(ASF)/common/utils \

@@ -7,6 +7,8 @@
 #ifndef _PCD8544_H_
 #define _PCD8544_H_
 
+#include <stdint.h>
+
 #define FALSE                      0
 #define TRUE                       1
 
@@ -34,15 +36,10 @@
 #define LCD_LIGHT_OFF       gpio_clr_gpio_pin(LCD_LIGHT_PIN)
 #define LCD_LIGHT_IS_ON     gpio_get_pin_value(LCD_LIGHT_PIN)
 
-// --------------- Pami?c Podr?czna dla LCD ( 84 * 48 ) / 8 = 504 bytes
+// --------------- Pami?c Podr?czna dla LCD ( 84 * 48 ) / 8 = 504 uint8_ts
 #define LCD_CACHE_SIZE             ( ( LCD_X_RES * LCD_Y_RES ) / 8)
 
-#define LCD_NOP asm volatile("nop\n\t""nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" ::)
-
-// --------------- Definicje Typów
-typedef char                       bool;
-typedef unsigned char              byte;
-typedef unsigned int               word;
+//#define LCD_NOP asm volatile("nop\n\t""nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" "nop\n\t" ::)
 
 // --------------- Enumeratorki
 typedef enum
@@ -71,23 +68,23 @@ typedef enum
 void PCD_Ini        ( void );
 void PCD_Clr        ( void );
 void PCD_Upd        ( void );
-void PCD_Img        ( const byte *imageData );
-void PCD_Contr      ( byte contrast);
-byte PCD_GotoXYFont ( byte x, byte y );
-byte PCD_Chr        ( LcdFontSize size, byte ch );
-byte PCD_Str        ( LcdFontSize size, byte dataArray[] );
-byte PCD_FStr       ( LcdFontSize size, const byte *dataPtr );
-byte PCD_Pixel      ( byte x, byte y, LcdPixelMode mode );
-byte PCD_Line       ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode );
-byte PCD_Rect       ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode );
-byte PCD_SBar       ( byte baseX, byte baseY, byte height, byte width, LcdPixelMode mode );
-byte PCD_Bars       ( byte data[], byte numbBars, byte width, byte multiplier );
+void PCD_Img        ( const uint8_t *imageData );
+void PCD_Contr      ( uint8_t contrast);
+uint8_t PCD_GotoXYFont ( uint8_t x, uint8_t y );
+uint8_t PCD_Chr        ( LcdFontSize size, uint8_t ch );
+uint8_t PCD_Str        ( LcdFontSize size, uint8_t dataArray[] );
+uint8_t PCD_FStr       ( LcdFontSize size, const uint8_t *dataPtr );
+uint8_t PCD_Pixel      ( uint8_t x, uint8_t y, LcdPixelMode mode );
+uint8_t PCD_Line       ( uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, LcdPixelMode mode );
+uint8_t PCD_Rect       ( uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, LcdPixelMode mode );
+uint8_t PCD_SBar       ( uint8_t baseX, uint8_t baseY, uint8_t height, uint8_t width, LcdPixelMode mode );
+uint8_t PCD_Bars       ( uint8_t data[], uint8_t numbBars, uint8_t width, uint8_t multiplier );
 
 
 
 // Tablica znaków 5x7 .....
 
-static const byte FontLookup [][5] =
+static const uint8_t FontLookup [][5] =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00 },   /* spacja */
     { 0x00, 0x00, 0x2f, 0x00, 0x00 },   /* ! */

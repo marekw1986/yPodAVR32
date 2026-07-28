@@ -10,18 +10,19 @@
 
 #include <avr32/io.h>
 #include <string.h>
+#include "gpio.h"
 #include "pcd8544.h"
 
 #define LCD_NOP  __asm__ __volatile__("nop")
 
 
-static void PCD_Snd    ( byte data, LcdCmdData cd );
+static void PCD_Snd    ( uint8_t data, LcdCmdData cd );
 static void Delay      ( void );
 
 
 
-// --------------------------  bufor cache w SRAM 84*48 bits or 504 bytes
-static byte  LcdCache [ LCD_CACHE_SIZE ];
+// --------------------------  bufor cache w SRAM 84*48 bits or 504 uint8_ts
+static uint8_t  LcdCache [ LCD_CACHE_SIZE ];
 static int   LcdCacheIdx;
 static int   LoWaterMark;
 static int   HiWaterMark;
@@ -65,7 +66,7 @@ void PCD_Ini(void)
 // Ustawia kontrast LCD
 // Wartosc  w zakresie 0x00 do 0x7F.
 
-void PCD_Contr ( byte contrast )
+void PCD_Contr ( uint8_t contrast )
 {
     PCD_Snd( 0x21, LCD_CMD );
 
@@ -91,7 +92,7 @@ void PCD_Clr ( void )
 
 // PCD_GotoXYFont
 // Ustawienie kursora z uwzglednieniem bazowej czcionki 5x7
-byte PCD_GotoXYFont ( byte x, byte y )
+uint8_t PCD_GotoXYFont ( uint8_t x, uint8_t y )
 {
     if( x > 14)
         return OUT_OF_BORDER;
@@ -106,10 +107,10 @@ byte PCD_GotoXYFont ( byte x, byte y )
 // PCD_Chr
 // Wyswietla znaki
 
-byte PCD_Chr ( LcdFontSize size, byte ch )
+uint8_t PCD_Chr ( LcdFontSize size, uint8_t ch )
 {
-    byte i, c;
-    byte b1, b2;
+    uint8_t i, c;
+    uint8_t b1, b2;
     int  tmpIdx;
 
     if ( LcdCacheIdx < LoWaterMark )
@@ -190,10 +191,10 @@ byte PCD_Chr ( LcdFontSize size, byte ch )
 
 // PCD_Str
 
-byte PCD_Str ( LcdFontSize size, byte dataArray[] )
+uint8_t PCD_Str ( LcdFontSize size, uint8_t dataArray[] )
 {
-    byte tmpIdx=0;
-    byte response;
+    uint8_t tmpIdx=0;
+    uint8_t response;
     while( dataArray[ tmpIdx ] != '\0' )
 	{
         // wys?nie znaku
@@ -209,11 +210,11 @@ byte PCD_Str ( LcdFontSize size, byte dataArray[] )
 // PCD_Pixel
 // Wyswietla pixel o zadanych wsp?rz?nych X, Y
 
-byte PCD_Pixel ( byte x, byte y, LcdPixelMode mode )
+uint8_t PCD_Pixel ( uint8_t x, uint8_t y, LcdPixelMode mode )
 {
-    word  index;
-    byte  offset;
-    byte  data;
+    uint16_t  index;
+    uint8_t  offset;
+    uint8_t  data;
 
     // obliczenie ramek
     if ( x > LCD_X_RES ) return OUT_OF_BORDER;
@@ -262,10 +263,10 @@ byte PCD_Pixel ( byte x, byte y, LcdPixelMode mode )
 // PCD_Line
 // Pozwala na rysowanie lini  o zadanych wsp?rz?nych
 
-byte PCD_Line ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode )
+uint8_t PCD_Line ( uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, LcdPixelMode mode )
 {
     int dx, dy, stepx, stepy, fraction;
-    byte response;
+    uint8_t response;
 
     dy = y2 - y1;
     dx = x2 - x1;
@@ -352,11 +353,11 @@ byte PCD_Line ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode )
 // PCD_SBar
 // Pozwala na rysowanie s?pka
 
-byte PCD_SBar ( byte baseX, byte baseY, byte height, byte width, LcdPixelMode mode )
+uint8_t PCD_SBar ( uint8_t baseX, uint8_t baseY, uint8_t height, uint8_t width, LcdPixelMode mode )
 {
-	byte tmpIdxX,tmpIdxY,tmp;
+	uint8_t tmpIdxX,tmpIdxY,tmp;
 
-    byte response;
+    uint8_t response;
 
     // Sprawdzenie ramek
 	if ( ( baseX > LCD_X_RES ) || ( baseY > LCD_Y_RES ) ) return OUT_OF_BORDER;
@@ -387,11 +388,11 @@ byte PCD_SBar ( byte baseX, byte baseY, byte height, byte width, LcdPixelMode mo
 // PCD_Bars
 // Pozwala na rysowanie wielu s?pk?
 
-byte PCD_Bars ( byte data[], byte numbBars, byte width, byte multiplier )
+uint8_t PCD_Bars ( uint8_t data[], uint8_t numbBars, uint8_t width, uint8_t multiplier )
 {
-	byte b;
-	byte tmpIdx = 0;
-    byte response;
+	uint8_t b;
+	uint8_t tmpIdx = 0;
+    uint8_t response;
 
 	for ( b = 0;  b < numbBars ; b++ )
 	{
@@ -416,10 +417,10 @@ byte PCD_Bars ( byte data[], byte numbBars, byte width, byte multiplier )
 // PCD_Rect
 // Rysuje prostok? o zadanych parametrach
 
-byte PCD_Rect ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode )
+uint8_t PCD_Rect ( uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, LcdPixelMode mode )
 {
-	byte tmpIdxX,tmpIdxY;
-    byte response;
+	uint8_t tmpIdxX,tmpIdxY;
+    uint8_t response;
 
 	// Sprawdzenie ramek
 	if ( ( x1 > LCD_X_RES ) ||  ( x2 > LCD_X_RES ) || ( y1 > LCD_Y_RES ) || ( y2 > LCD_Y_RES ) )
@@ -449,10 +450,10 @@ byte PCD_Rect ( byte x1, byte x2, byte y1, byte y2, LcdPixelMode mode )
 // PCD_Img
 // Wyswietla bitmape
 
-void PCD_Img ( const byte *imageData )
+void PCD_Img ( const uint8_t *imageData )
 {
 
-    memcpy_P(LcdCache,imageData,LCD_CACHE_SIZE);
+    memcpy(LcdCache,imageData,LCD_CACHE_SIZE);
 
     LoWaterMark = 0;
     HiWaterMark = LCD_CACHE_SIZE - 1;
@@ -495,9 +496,9 @@ void PCD_Upd ( void )
 // PCD_Snd
 // Wysy? dane do wyswietlacza
 
-static void PCD_Snd(byte data, LcdCmdData cd)
+static void PCD_Snd(uint8_t data, LcdCmdData cd)
 {
-    byte m;
+    uint8_t m;
 
     gpio_clr_gpio_pin(LCD_CE_PIN);      // select — active low
 
