@@ -25,6 +25,7 @@ INCLUDES = \
 	-I$(ASF)/avr32/drivers/flashc \
 	-I$(ASF)/avr32/drivers/ssc/i2s \
 	-I$(ASF)/avr32/drivers/pdca \
+	-I$(ASF)/avr32/drivers/wdt \
 	-I$(ASF)/common/utils \
 
 CFLAGS = \
@@ -71,6 +72,7 @@ CSRCS = \
 	$(ASF)/avr32/drivers/flashc/flashc.c \
 	$(ASF)/avr32/drivers/ssc/i2s/ssc_i2s.c \
 	$(ASF)/avr32/drivers/pdca/pdca.c \
+	$(ASF)/avr32/drivers/wdt/wdt.c \
 	
 ASRCS = \
 	$(ASF)/avr32/drivers/intc/exception.S \

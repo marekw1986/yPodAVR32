@@ -4,6 +4,7 @@
 #include <mad.h>
 #include <ff.h>
 #include "intc.h"
+#include "wdt.h"
 #include "system_time.h"
 #include "pcd8544.h"
 #include "wm8731.h"
@@ -30,11 +31,15 @@ int main(void)
     wm8731_init();
     
     /*FRESULT res = */f_mount(&SDFat, "0:", 0);
+    
+    wdt_opt_t opt = {.us_timeout_period = 2000000};
+    wdt_enable(&opt);
 
     while (1)
     {
         counter++;
         wm8731_handle();
+        wdt_clear();
     }
 
     return 0;
