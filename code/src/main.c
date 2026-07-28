@@ -19,6 +19,8 @@ int main(void)
 
     AVR32_GPIO.port[0].ovr = 0x01;
     
+    clock_init();
+    
     system_time_init();
     PCD_Ini();
     

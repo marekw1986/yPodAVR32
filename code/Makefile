@@ -18,6 +18,8 @@ INCLUDES = \
 	-I$(ASF)/avr32/utils/preprocessor \
 	-I$(ASF)/avr32/drivers \
 	-I$(ASF)/avr32/drivers/intc \
+	-I$(ASF)/avr32/drivers/pm \
+	-I$(ASF)/avr32/drivers/flashc \
 	-I$(ASF)/common/utils \
 
 CFLAGS = \
@@ -58,6 +60,8 @@ CSRCS = \
 	lcd/pcd8544.c \
 	$(ASF)/avr32/drivers/intc/intc.c \
 	$(ASF)/avr32/drivers/gpio/gpio.c \
+	$(ASF)/avr32/drivers/pm/pm.c \
+	$(ASF)/avr32/drivers/flashc/flashc.c \
 	
 ASRCS = \
 	$(ASF)/avr32/drivers/intc/exception.S \
