@@ -13,21 +13,21 @@ INCLUDES = \
 	-Ifatfs \
 	-Ilcd \
 	-Iinclude \
-	-I$(ASF)/avr32/utils/header_files \
-	-I$(ASF)/thirdparty/libmad \
-	-I$(ASF)/avr32/utils \
-	-I$(ASF)/avr32/utils/preprocessor \
-	-I$(ASF)/avr32/drivers \
-	-I$(ASF)/avr32/drivers/intc \
-	-I$(ASF)/avr32/drivers/gpio \
-	-I$(ASF)/avr32/drivers/twi \
-	-I$(ASF)/avr32/drivers/pm \
-	-I$(ASF)/avr32/drivers/flashc \
-	-I$(ASF)/avr32/drivers/ssc/i2s \
-	-I$(ASF)/avr32/drivers/pdca \
-	-I$(ASF)/avr32/drivers/pwm \
-	-I$(ASF)/avr32/drivers/wdt \
-	-I$(ASF)/common/utils \
+	-isystem $(ASF)/avr32/utils/header_files \
+	-isystem $(ASF)/thirdparty/libmad \
+	-isystem $(ASF)/avr32/utils \
+	-isystem $(ASF)/avr32/utils/preprocessor \
+	-isystem $(ASF)/avr32/drivers \
+	-isystem $(ASF)/avr32/drivers/intc \
+	-isystem $(ASF)/avr32/drivers/gpio \
+	-isystem $(ASF)/avr32/drivers/twi \
+	-isystem $(ASF)/avr32/drivers/pm \
+	-isystem $(ASF)/avr32/drivers/flashc \
+	-isystem $(ASF)/avr32/drivers/ssc/i2s \
+	-isystem $(ASF)/avr32/drivers/pdca \
+	-isystem $(ASF)/avr32/drivers/pwm \
+	-isystem $(ASF)/avr32/drivers/wdt \
+	-isystem $(ASF)/common/utils \
 
 CFLAGS = \
     -march=ucr2 \
