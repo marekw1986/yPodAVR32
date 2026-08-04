@@ -101,6 +101,9 @@ $(TARGET).bin: $(TARGET).elf
 
 $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex $< $@
+	
+flash:
+	avrdude -c jtagmkii_avr32 -p uc3a1512 -P usb -U flash:w:$(TARGET).hex
 
 clean:
 	rm -rf $(BUILD)
