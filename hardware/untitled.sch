@@ -16164,7 +16164,7 @@ Shielded SMT Power Inductors – LPS4018 Series</description>
 <part name="R9" library="rcl" deviceset="R-EU_" device="R0402"/>
 <part name="U$6" library="crystal" deviceset="ASE" device=""/>
 <part name="GND30" library="supply1" deviceset="GND" device=""/>
-<part name="C8" library="rcl" deviceset="C-EU" device="C0603"/>
+<part name="C8" library="rcl" deviceset="C-EU" device="C0402"/>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
 <part name="J2" library="connector_tst" deviceset="USB4110-GF-A" device=""/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
